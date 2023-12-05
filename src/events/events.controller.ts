@@ -1,4 +1,15 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import { CreateEventDto } from '../dto/create-event.dto';
+import { UpdateEventDto } from 'src/dto/update-event.dto';
 
 @Controller('/events')
 export class EventsController {
@@ -13,15 +24,17 @@ export class EventsController {
   }
 
   @Post()
-  create(): string {
-    return 'This action creates a new event';
+  create(@Body() input: CreateEventDto): object {
+    console.log(input.address);
+    return input;
   }
 
   @Patch(':id')
-  update(): string {
-    return 'This action updates a #${id} event';
+  update(@Param('id') id, @Body() input: UpdateEventDto) {
+    return input;
   }
   @Delete(':id')
+  @HttpCode(204)
   delete(): string {
     return 'This action removes a #${id} event';
   }
