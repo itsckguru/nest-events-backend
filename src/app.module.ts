@@ -12,6 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             username: 'root',
             password: 'example',
             database: 'nest-events',
+            entities: [Event],
+            synchronize: true,
         }),
     ],
 
