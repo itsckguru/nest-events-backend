@@ -4,7 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    // app.useGlobalPipes(new ValidationPipe()); // <== when group validation is added.
+    app.useGlobalPipes(new ValidationPipe()); // <== when group validation is added.
     await app.listen(3000);
 }
 bootstrap();
