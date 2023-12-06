@@ -4,15 +4,17 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Event } from './events/events.entity';
 import { EventsModule } from './events/events.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
     imports: [
+        ConfigModule.forRoot(),
         TypeOrmModule.forRoot({
             type: 'mysql',
-            host: '127.0.0.1',
-            port: 3306,
-            username: 'root',
-            password: 'example',
-            database: 'nest-events',
+            host: process.env.DB_HOST,
+            port: Number(process.env.DB_PORT),
+            username: process.env.DB_USER_NAME,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_DATABASE,
             entities: [Event],
             synchronize: true,
         }),
@@ -20,6 +22,11 @@ import { EventsModule } from './events/events.module';
     ],
 
     controllers: [AppController],
-    providers: [AppService],
+    providers: [
+        {
+            provide: AppService,
+            useClass: AppService,
+        },
+    ],
 })
 export class AppModule {}
