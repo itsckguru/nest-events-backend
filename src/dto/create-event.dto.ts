@@ -7,6 +7,7 @@ export class CreateEventDto {
     description: string;
     @Length(5, 255)
     when: Date;
-    @Length(5, 255)
+    @Length(5, 255, { groups: ['create'] })
+    @Length(10, 255, { groups: ['update'] })
     address: string;
 }
