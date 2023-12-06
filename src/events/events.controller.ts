@@ -19,7 +19,7 @@ export class EventsController {
     // private events: Event[] = [];
     constructor(
         @InjectRepository(Event)
-        private readonly respository: Repository<Event>
+        private readonly respository: Repository<Event>,
     ) {}
 
     @Get()
@@ -29,11 +29,14 @@ export class EventsController {
 
     @Get(':id')
     async findOne(@Param('id') id) {
-        return await this.respository.findOne(id);
+        const query = {
+            where: { id: id },
+        };
+        return await this.respository.findOne(query);
     }
 
     @Post()
-    async create(@Body() input: CreateEventDto){
+    async create(@Body() input: CreateEventDto) {
         return await this.respository.save({
             ...input,
             when: new Date(input.when),
@@ -49,7 +52,6 @@ export class EventsController {
             ...input,
             when: input.when ? new Date(input.when) : event.when,
         });
-
     }
     @Delete(':id')
     @HttpCode(204)
