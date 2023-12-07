@@ -5,6 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Event } from './events/events.entity';
 import { EventsModule } from './events/events.module';
 import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { SchoolModule } from './school/school.module';
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -19,8 +22,13 @@ import { ConfigModule } from '@nestjs/config';
             synchronize: true,
         }),
         EventsModule,
+        SchoolModule,
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            autoSchemaFile: true,
+            playground: true,
+        }),
     ],
-
     controllers: [AppController],
     providers: [
         {
