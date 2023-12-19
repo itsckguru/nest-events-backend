@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { SchoolModule } from './school/school.module';
+import { EventsModuleGraphQL } from './graphql/events/event.module';
 @Module({
     imports: [
         ConfigModule.forRoot(),
@@ -23,6 +24,7 @@ import { SchoolModule } from './school/school.module';
         }),
         EventsModule,
         SchoolModule,
+        EventsModuleGraphQL,
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
             autoSchemaFile: true,
